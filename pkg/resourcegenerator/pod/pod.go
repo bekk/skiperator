@@ -2,6 +2,7 @@ package pod
 
 import (
 	"fmt"
+
 	skiperatorv1alpha1 "github.com/kartverket/skiperator/api/v1alpha1"
 	"github.com/kartverket/skiperator/api/v1alpha1/podtypes"
 	"github.com/kartverket/skiperator/pkg/flags"
@@ -25,8 +26,8 @@ type PodOpts struct {
 }
 
 func CreatePodSpec(containers []corev1.Container, volumes []corev1.Volume, serviceAccountName string, priority string,
-	policy *corev1.RestartPolicy, podSettings *podtypes.PodSettings, serviceName string) corev1.PodSpec {
-
+	policy *corev1.RestartPolicy, podSettings *podtypes.PodSettings, serviceName string,
+) corev1.PodSpec {
 	if podSettings == nil {
 		podSettings = &podtypes.PodSettings{
 			TerminationGracePeriodSeconds: int64(30),
@@ -237,7 +238,6 @@ func getEnv(variables []corev1.EnvVar) []corev1.EnvVar {
 }
 
 func getContainerPorts(application *skiperatorv1alpha1.Application, opts PodOpts) []corev1.ContainerPort {
-
 	containerPorts := []corev1.ContainerPort{
 		{
 			Name:          "main",
