@@ -11,7 +11,7 @@ import (
 
 func getTexasEnv(application *skiperatorv1alpha1.Application) ([]corev1.EnvVar, error) {
 	env := []corev1.EnvVar{
-		{Name: "BIND_ADDRESS", Value: "0.0.0.0:3000"},
+		{Name: "BIND_ADDRESS", Value: "127.0.0.1:3000"},
 		{Name: "DOWNSTREAM_APP_NAME", Value: application.Name},
 		{Name: "DOWNSTREAM_APP_NAMESPACE", Value: application.Namespace},
 		{Name: "DOWNSTREAM_APP_CLUSTER", Value: "kind-skiperator"},
