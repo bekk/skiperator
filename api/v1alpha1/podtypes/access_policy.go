@@ -27,6 +27,11 @@ type AccessPolicy struct {
 	//
 	//+kubebuilder:validation:Optional
 	TokenX bool `json:"tokenX,omitempty"`
+
+	// Texas enables the use of Texas for authentication and authorization.
+	//
+	//+kubebuilder:validation:Optional
+	Texas bool `json:"texas,omitempty"`
 }
 
 // InboundPolicy

@@ -7,10 +7,11 @@ import (
 
 	"github.com/kartverket/skiperator/pkg/reconciliation"
 	"github.com/kartverket/skiperator/pkg/resourcegenerator/idporten"
-	"github.com/kartverket/skiperator/pkg/resourcegenerator/jwker"
 	"github.com/kartverket/skiperator/pkg/resourcegenerator/maskinporten"
 	"github.com/kartverket/skiperator/pkg/resourcegenerator/pod"
 	"github.com/kartverket/skiperator/pkg/resourcegenerator/resourceutils"
+	"github.com/kartverket/skiperator/pkg/resourcegenerator/tokenx/jwker"
+	"github.com/kartverket/skiperator/pkg/resourcegenerator/tokenx/texas"
 	"github.com/kartverket/skiperator/pkg/resourcegenerator/volume"
 
 	"github.com/go-logr/logr"
@@ -161,6 +162,11 @@ func Generate(r reconciliation.Reconciliation) error {
 	if util.IsCloudSqlProxyEnabled(application.Spec.GCP) {
 		cloudSqlProxyContainer := pod.CreateCloudSqlProxyContainer(application.Spec.GCP.CloudSQLProxy)
 		containers = append(containers, cloudSqlProxyContainer)
+	}
+
+	if texas.TexasSpecifiedInSpec(application.Spec.AccessPolicy) {
+		texasContainer := texas.CreateTexasSidecarContainer(application)
+		containers = append(containers, texasContainer)
 	}
 
 	podForDeploymentTemplate := corev1.Pod{
