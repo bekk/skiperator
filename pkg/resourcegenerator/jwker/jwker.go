@@ -114,6 +114,10 @@ func GenerateJwkerAccessPolicy(application *skiperatorv1alpha1.Application) (*na
 		},
 	}
 
+	if accessPolicy.Inbound == nil {
+		return jwkerAccessPolicy, nil
+	}
+
 	for _, rule := range accessPolicy.Inbound.Rules {
 		jwkerRule := naisiov1.AccessPolicyInboundRule{
 			AccessPolicyRule: naisiov1.AccessPolicyRule{
